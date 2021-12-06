@@ -13,3 +13,5 @@ RoxygenNote: 7.1.0
 Imports: 
     data.table,
     httr
+URL: https://github.com/nalu357/ComorbidityAnalysis
+BugReports: https://github.com/nalu357/ComorbidityAnalysis/issues
