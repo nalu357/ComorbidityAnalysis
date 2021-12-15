@@ -18,14 +18,15 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of ComorbidityAnalysis is to ...
+Joint Statistical Genomics Analysis Of Comorbid Traits.
 
 ## Installation
 
-You can install the released version of ComorbidityAnalysis from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of ComorbidityAnalysis from [[GitHub](https://github.com/) with:
 
 ``` r
-install.packages("ComorbidityAnalysis")
+# install.packages("devtools")
+devtools::install_github("nalu357/ComorbidityAnalysis")
 ```
 
 ## Example

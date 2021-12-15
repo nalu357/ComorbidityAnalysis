@@ -7,15 +7,16 @@
 
 <!-- badges: end -->
 
-The goal of ComorbidityAnalysis is to …
+Joint Statistical Genomics Analysis Of Comorbid Traits.
 
 ## Installation
 
 You can install the released version of ComorbidityAnalysis from
-[CRAN](https://CRAN.R-project.org) with:
+\[[GitHub](https://github.com/) with:
 
 ``` r
-install.packages("ComorbidityAnalysis")
+# install.packages("devtools")
+devtools::install_github("nalu357/ComorbidityAnalysis")
 ```
 
 ## Example

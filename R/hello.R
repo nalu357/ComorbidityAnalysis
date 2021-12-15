@@ -21,7 +21,9 @@
 #'
 #' @examples
 #' hello("Ana")
-#' \dontrun{hello("Ole")}
+#' \dontrun{
+#' hello("Ole")
+#' }
 hello <- function(x) {
   print(paste0("Hello, ", x, " world!"))
 }

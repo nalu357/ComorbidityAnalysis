@@ -1,22 +1,22 @@
-sort_alleles <- Vectorize(function(x,y) {
+sort_alleles <- Vectorize(function(x, y) {
   paste(sort(c(x, y)), collapse = "_")
 })
 
-write_output <- function(var, dict, filename){
+write_output <- function(var, dict, filename) {
   # var can be one variable or a list
-  fwrite(dict[[paste(var, collapse="_")]], filename)
+  fwrite(dict[[paste(var, collapse = "_")]], filename)
 }
 
-add_key_value <- function(hash, key, new.value){
-  if(has.key(key, hash)){
+add_key_value <- function(hash, key, new.value) {
+  if (has.key(key, hash)) {
     hash[key] <- append(hash[[key]], new.value)
   }
-  else{
+  else {
     .set(hash, key, new.value)
   }
 }
 
-annotate_rsids <- function(trait, trait_dt, rsid){
+annotate_rsids <- function(trait, trait_dt, rsid) {
   # read data
   # rsid <- fread(pste0("/project_data/processed_data/Variants2rsID/", trait,".id.rsid.bed"), verbose=FALSE)
   # trait_dt <- fread(paste0("/project_data/processed_data/GWASKneeOA/GWAS_", trait,"_precoloc_regions"), verbose=FALSE)
@@ -25,20 +25,20 @@ annotate_rsids <- function(trait, trait_dt, rsid){
   colnames(rsid) <- c("CHR:POS", "CHR", "POS", "rsID", "A1", "A2", "ID")
 
   # remove indels
-  new_rsid <- rsid[nchar(A1)==1]
+  new_rsid <- rsid[nchar(A1) == 1]
 
   # separate A2 column when there is a komma
-  new_rsid <- separate(new_rsid, "A2", c("A2a", "A2b"), sep=",")
-  new_rsid <- melt(new_rsid, measure.vars=c("A2a","A2b"), variable.name="variable", value.name="A2")
+  new_rsid <- separate(new_rsid, "A2", c("A2a", "A2b"), sep = ",")
+  new_rsid <- melt(new_rsid, measure.vars = c("A2a", "A2b"), variable.name = "variable", value.name = "A2")
 
   # add IDs to trait_rsid
-  new_rsid[, ID:=paste(`CHR:POS`, sort_alleles(A1, A2), sep="_")]
+  new_rsid[, ID := paste(`CHR:POS`, sort_alleles(A1, A2), sep = "_")]
 
   # merge rsid into trait data.table
-  new_trait_dt <- merge(trait_dt[, .SD, .SDcols = !"rsID"], new_rsid[, .(ID, POS=as.integer(POS), CHR=as.integer(CHR), rsID)], by=c("ID", "CHR", "POS"), all.x=TRUE)
+  new_trait_dt <- merge(trait_dt[, .SD, .SDcols = !"rsID"], new_rsid[, .(ID, POS = as.integer(POS), CHR = as.integer(CHR), rsID)], by = c("ID", "CHR", "POS"), all.x = TRUE)
 
   # save anotated dataset
-  fwrite(new_trait_dt[, `CHR:POS`:=NULL], paste0("/project_data/processed_data/GWASKneeOA/GWAS_", trait,"_rsid_precoloc_regions.csv"), verbose=FALSE)
+  fwrite(new_trait_dt[, `CHR:POS` := NULL], paste0("/project_data/processed_data/GWASKneeOA/GWAS_", trait, "_rsid_precoloc_regions.csv"), verbose = FALSE)
 }
 
 
